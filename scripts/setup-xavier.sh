@@ -13,6 +13,8 @@ pip3 install -U pip
 # avoids warnings caused by invoking the pip3 wrapper script
 PIP_INSTALL="python3 -m pip install --user"
 
+export OPENBLAS_CORETYPE=ARMV8
+
 ${PIP_INSTALL} -U Cython
 ${PIP_INSTALL} -U protobuf
 ${PIP_INSTALL} -U numpy pandas "matplotlib==3.3.4" scipy sklearn scikit-image
@@ -23,7 +25,7 @@ wget https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl -
 ${PIP_INSTALL} torch-1.8.0-cp36-cp36m-linux_aarch64.whl
 
 # check whether everything's good so far
-python3 -c 'import torch; assert torch.cuda.is_available()' || { echo "something went wrong when importing torch and checking for cuda "; }
+python3 -c 'import torch; assert torch.cuda.is_available()' || { echo "something went wrong when importing torch and checking for cuda"; exit 1; }
 
 # install torchvision from source
 ${PIP_INSTALL} -U pillow
