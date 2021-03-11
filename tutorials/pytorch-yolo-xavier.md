@@ -114,6 +114,7 @@ Install torchvision v0.9.0 (version for torch 1.8)
 	cd torchvision
 	export BUILD_VERSION=0.9.0
 	python3 setup.py install --user
+	cd .. # running torch from torchvision/ will fail
 
 ## Testing YOLOv5
 
