@@ -17,7 +17,9 @@ export OPENBLAS_CORETYPE=ARMV8
 
 ${PIP_INSTALL} -U Cython
 ${PIP_INSTALL} -U protobuf
-${PIP_INSTALL} -U numpy pandas "matplotlib==3.3.4" scipy sklearn scikit-image
+${PIP_INSTALL} -U numpy pandas 
+${PIP_INSTALL} -U "matplotlib==3.3.4"
+${PIP_INSTALL} -U scipy sklearn scikit-image
 
 # install dependencies from source and PyTorch from wheel provided by NVIDIA
 ${PIP_INSTALL} -U future psutil dataclasses typing-extensions pyyaml tqdm
