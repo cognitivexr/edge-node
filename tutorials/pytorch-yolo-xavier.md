@@ -1,18 +1,18 @@
 This is a guide on how to install a Python computer vision environment on the Jetson Xavier NX platform.
 
-
 ## Setting up the Jetson Xavier NX
 
 To get started with the hardware, you need to write the Jetson Xavier NX Developer Kit ([JetPack SDK](https://developer.nvidia.com/embedded/jetpack)) onto a fresh microSD card.
 Follow [the instructions on the NVIDIA website](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit) to install the image.
 The JetPack version at the time of writing is 4.5.1.
 
+
 Using Linux, we can simply run the following command, where `sdX` refers to the SD card.
 
 	unzip -p jetson-nx-jp451-sd-card-image.zip| sudo dd of=/dev/sdX bs=1M status=progress
 
-Insert the SD card and start up the Jetson.
-Click through the installation procedure, and then update the system with
+Insert the SD card, start up the Jetson, and click through the installation procedure.
+Then update the system with
 
 	sudo apt update && sudo apt upgrade -y
 
@@ -21,7 +21,7 @@ Reboot and then we'll set up the environment.
 ## Getting PyTorch to run
 
 We will install several libraries and dependencies to get PyTorch to run.
-You can shortcut the entire procedure by downloading and running the following script: [setup-xavier.sh](https://raw.githubusercontent.com/cognitivexr/edge-node/main/scripts/) or run:
+You can shortcut the entire procedure by downloading and running the following script that we've prepared: [setup-xavier.sh](https://github.com/cognitivexr/edge-node/blob/main/scripts/setup-xavier.sh) or run:
 
 	curl https://raw.githubusercontent.com/cognitivexr/edge-node/main/scripts/setup-xavier.sh | bash
 
@@ -58,12 +58,11 @@ Some are pre-installed but outdated and will require updating
 
 To simplify things, it makes sense to install the base kit as system-wide packages, and only use virtual environments for additional dependencies. 
 Follow the instructions step by step.
-Since some commands may take 
 
 Install some build dependencies we'll need
 
-	sudo apt install -y libopenblas-base libopenblas-dev 
 	sudo apt install -y python3-pip python3-venv python3-dev libpython3-dev
+	sudo apt install -y libopenblas-base
 	sudo apt install -y gfortran libopenmpi-dev liblapack-dev libatlas-base-dev
 
 Install Cython
@@ -74,9 +73,6 @@ Upgrade pip and other python setup tools
 
 	pip3 install --upgrade pip
 	pip3 install --upgrade protobuf
-
-
-Make sure not to upgrade wheel (0.30.0) and setuptools (39.0.1), as this may lead to runtime errors when importing packages that were built from source.
 
 Upgrade data science libraries
 
@@ -107,6 +103,8 @@ At this point, you can check whether PyTorch detects the CUDA device correctly
 	python3 -c 'import torch; print(torch.cuda.is_available())'
 
 should output `True`
+
+If the Python process terminates with `Illegal instruction (core dumped)`, it's likely related to [an issue with numpy 1.19.5 and OpenBLAS](https://github.com/numpy/numpy/issues/18131). Either run `export OPENBLAS_CORETYPE=ARMV8`, set it in your `.bashrc` file, or downgrade to numpy 1.19.4 by running `pip3 install -U "numpy==1.19.4"`.
 
 Install torchvision v0.9.0 (version for torch 1.8)
 
@@ -151,4 +149,3 @@ After activating with `source .venv/bin/activate`, you can install dependencies 
 	pip install -I
 
 Where `-I` is the shorthand for `--ignore-installed`.
-
