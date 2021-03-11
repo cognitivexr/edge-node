@@ -94,7 +94,7 @@ Install scikit-image (may take quite long)
 
 Install PyTorch 1.8 from the available wheel
 
-	pip3 install -U future psutil dataclasses typing-extensions pyyaml tqdm
+	pip3 install -U future psutil dataclasses typing-extensions pyyaml tqdm seaborn
 	wget https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl -O torch-1.8.0-cp36-cp36m-linux_aarch64.whl 
 	pip3 install torch-1.8.0-cp36-cp36m-linux_aarch64.whl
 
@@ -109,7 +109,7 @@ If the Python process terminates with `Illegal instruction (core dumped)`, it's 
 Install torchvision v0.9.0 (version for torch 1.8)
 
 	sudo apt install libjpeg-dev zlib1g-dev libpython3-dev libavcodec-dev libavformat-dev libswscale-dev
-	pip3 install --upgrade pillow
+	pip3 install --upgrade pillow 
 	git clone --branch v0.9.0 https://github.com/pytorch/vision torchvision
 	cd torchvision
 	export BUILD_VERSION=0.9.0
